@@ -1,0 +1,27 @@
+
+CUDA_VISIBLE_DEVICES=0 llamafactory-cli train \
+    --stage dpo \
+    --do_train \
+    --do_eval \
+    --model_name_or_path /path/to/your/Meta-Llama-3-8B-Instruct \
+    --adapter_name_or_path ./saves/LLaMA3-8B/lora/sft \
+    --dataset shoes_dpo \
+    --dataset_dir ./data \
+    --template llama3 \
+    --finetuning_type lora \
+    --lora_target all \
+    --output_dir ./saves/LLaMA3-8B/lora/dpo \
+    --overwrite_output_dir \
+    --per_device_train_batch_size 1 \
+    --gradient_accumulation_steps 8 \
+    --lr_scheduler_type cosine \
+    --learning_rate 5e-6 \
+    --num_train_epochs 3.0 \
+    --logging_steps 40 \
+    --evaluation_strategy steps \
+    --eval_steps 40 \
+    --save_steps 40 \
+    --load_best_model_at_end \
+    --metric_for_best_model rewards/accuracies \
+    --plot_loss \
+    --fp16
